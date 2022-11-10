@@ -4,11 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#0f0e17",
+        background: "#1F1F1F",
+        accent: "#833BBE",
         headline: "#fffffe",
-        parragraf: "#a7a9be",
+        parragraf: "rgba(255, 255, 255, 0.75)",
         "button-text": "#fffffe",
-        primary: "#ff8906",
+        primary: "#833BBE",
         secondary: "#f25f4c",
         tertiary: "#e53170",
       },
