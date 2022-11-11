@@ -1,11 +1,15 @@
 import type {NextPage} from "next";
 
-import {Connected} from "@/components";
+import {useWallet} from "@solana/wallet-adapter-react";
+
+import {Connected, Disconnected} from "@/components";
 
 const Home: NextPage = () => {
+  const {connected} = useWallet();
+
   return (
     <section className="flex flex-col items-center gap-10">
-      <Connected />
+      {!connected ? <Disconnected /> : <Connected />}
     </section>
   );
 };
