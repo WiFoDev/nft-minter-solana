@@ -37,7 +37,7 @@ export const Layout = ({children}: LayoutProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between h-screen">
+    <div className="flex flex-col h-screen">
       <Head>
         <title>Buildoor NFT</title>
         <meta content="Earn BLD And Level Up" name="Buildoor NFT" />
@@ -74,11 +74,11 @@ export const Layout = ({children}: LayoutProps) => {
           )}
         </nav>
       </header>
-      <main className="relative grid place-items-center">
+      <main className="relative grid flex-1 place-items-center">
         {children}
       </main>
       <footer className="relative pb-[env(safe-area-inset-bottom)]">
-        <div className="mx-auto max-w-screen-standar py-12 flex justify-center pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
+        <div className="mx-auto max-w-screen-standar py-8 flex justify-center pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
           Build with ❤️ by WiFo
         </div>
       </footer>
