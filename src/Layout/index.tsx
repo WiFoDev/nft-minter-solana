@@ -1,17 +1,40 @@
 import Head from "next/head";
-import React from "react";
+import React, {useMemo} from "react";
 import Image from "next/image";
-import {useConnection, useWallet} from "@solana/wallet-adapter-react";
+import {useWallet} from "@solana/wallet-adapter-react";
+import {useWalletModal} from "@solana/wallet-adapter-react-ui";
 
 import bgImage from "@/assets/home-background.svg";
+import connectedIcon from "@/assets/icons/connected.svg";
+import disconnectIcon from "@/assets/icons/disconnect.svg";
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 export const Layout = ({children}: LayoutProps) => {
-  const {connection} = useConnection();
-  const {publicKey, connect, disconnect} = useWallet();
+  const modalState = useWalletModal();
+  const {publicKey, wallet, disconnect} = useWallet();
+
+  const formatedPK = useMemo(() => {
+    if (publicKey) {
+      const pkAsStr = publicKey.toString();
+
+      return `${pkAsStr.slice(0, 4)}...${pkAsStr.slice(
+        pkAsStr.length - 4,
+      )}`;
+    }
+  }, [publicKey]);
+
+  const handleConnect = () => {
+    if (!wallet) {
+      modalState.setVisible(true);
+    }
+  };
+
+  const handleDisconnect = () => {
+    modalState.setVisible(true);
+  };
 
   return (
     <div className="flex flex-col justify-between h-screen">
@@ -26,8 +49,29 @@ export const Layout = ({children}: LayoutProps) => {
         </div>
       )}
       <header className="relative w-full">
-        <nav className="flex pointer-events-none h-16 mx-auto max-w-screen-standar items-center justify-end gap-2 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
-          <button className="text-lg">Connect Wallet</button>
+        <nav className="flex h-16 mx-auto max-w-screen-standar items-center justify-end gap-2 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
+          {!publicKey ? (
+            <button className="text-lg" onClick={handleConnect}>
+              Connect Wallet
+            </button>
+          ) : (
+            <>
+              <button
+                className="flex items-center gap-2"
+                onClick={handleDisconnect}
+              >
+                <div className="grid w-4 h-4 place-items-center">
+                  <Image alt="connected icon" src={connectedIcon} />
+                </div>
+                {formatedPK}
+              </button>
+              <button onClick={disconnect}>
+                <div className="grid w-3 h-3 place-items-center">
+                  <Image alt="disconnect icon" src={disconnectIcon} />
+                </div>
+              </button>
+            </>
+          )}
         </nav>
       </header>
       <main className="relative grid place-items-center">

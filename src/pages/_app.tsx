@@ -28,7 +28,7 @@ function MyApp({Component, pageProps}: AppProps) {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets}>
+      <WalletProvider autoConnect wallets={wallets}>
         <WalletModalProvider>
           <Layout>
             <Component {...pageProps} />
